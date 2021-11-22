@@ -1,23 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import {
+  useThemeDispatch,
+  useThemeState,
+} from "./context/themeContext/context";
+import { dark, light } from "./context/themeContext/actions";
 
+import "./App.css";
 function App() {
+  const themeChanger = useThemeState();
+  const themeDispatch = useThemeDispatch();
+
+  const themeHandler = () => {
+    themeChanger.darkMode ? dark(themeDispatch) : light(themeDispatch);
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <div>
+      <div className={`bg ${themeChanger.darkMode ? "bg-dark" : "bg-light"}`}>
+        <button
+          className={`btn ${themeChanger.darkMode ? "btn-dark" : "btn-light"}`}
+          onClick={themeHandler}
         >
-          Learn React
-        </a>
-      </header>
+          {themeChanger.darkMode ? "DARK MODE" : "LIGHT MODE"}
+        </button>
+      </div>
     </div>
   );
 }
